@@ -1,26 +1,21 @@
-import { useEffect, useRef, useState } from "react";
-//import { SeacrhTop } from "../components/Searchbar"
-//import { FooterScreen } from "../components/footer";
+import { 
+  useEffect, 
+  useRef, 
+  useState } from "react";
 import  MenuCard  from "../components/menuCard";
-//import { MenuCard2 } from "../components/menuCard2";
-//import { useQuery } from "react-query";
-//import { AxiosClient } from "../libs/AxiosClient";
-//import { type } from "os";
-//import axios from "axios";
-//import { GetStaticProps, GetServerSideProps } from "next";
-//import  BestSeller  from "../components/bestSeller";
-import { CategoryContext } from "@/pages/_app";
+
 import dynamic from "next/dynamic";
 
 type HomePageProps={
   menus ? :any|[]
   active ? : number
-  setActive ? : (active: number) => void
+  setActive ? : (active: number) => void,
+  lastElementRef? : HTMLDivElement|any
 }
 
 const DynamicLoading = dynamic(()=>import("@/src/components/menuCard"))
 
-export const HomePageScreen = ({menus,active, setActive}: HomePageProps) => {
+export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePageProps) => {
   const[currentPage,setCurrentPage]= useState(1)
   const [loading, setLoading] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
@@ -34,52 +29,7 @@ export const HomePageScreen = ({menus,active, setActive}: HomePageProps) => {
     setData(menus)
   },[menus])
   
-/*
 
-  useEffect(()=>{
-    const observer = new IntersectionObserver((entries)=>{
-      if (entries[0].isIntersecting) {
-        setLoading(true);
-        setTimeout(() => setShowLoading(true), delay);
-        setData(menus)
-        setLoading(false);
-        setShowLoading(false);
-      }
-    })
-    //@ts-ignore
-    observer.observe(bottom.current);
-  },[])
-
-  //console.log(data)
-  const pageSize = 16;
-  let pagination = Math.ceil(menus?.length/pageSize);
-  // const startIndex = (currentPage - 1) * pageSize;
-  // const endIndex = startIndex + pageSize;
-
-  //Func Return Data per page
-  const paginate = (items:any|[], page = 1, perPage = 16) => {
-    const offset = perPage * (page - 1);
-    const paginatedItems = items?.slice(offset, offset + perPage);
-    return paginatedItems;
-  };
-
-  //let itemsToDisplay = menus?.slice(startIndex, endIndex);
-  //Handle click pagination
-  function handlePageChange(pageNumber: any | number) {
-    setCurrentPage(pageNumber)
-    setData(paginate(menus,pageNumber))
-   }
-  
-  //
-  let arrOfPage : number[]= []
-  for(var i =1;i<= pagination;i++){
-    arrOfPage.push(i)
-  }
-*/
-  
-  //console.log(data)
-
-  
   return(
     <>
       {
@@ -97,7 +47,7 @@ export const HomePageScreen = ({menus,active, setActive}: HomePageProps) => {
             {
               data?.sort((a:any, b:any) => b.id - a.id)?.map((p:any, index:number) => {
                 return(
-                  <div className="col-md-3 mb-4 " key={index+1}>
+                  <div className="col-md-3 mb-4 " key={index+1} ref={index === data.length - 1 ? lastElementRef : null}>
                    <MenuCard
                       id={p.id}
                       code={p.code}
@@ -151,7 +101,20 @@ export const HomePageScreen = ({menus,active, setActive}: HomePageProps) => {
 
 
 
-  /*
+/*
+//import { MenuCard2 } from "../components/menuCard2";
+//import { useQuery } from "react-query";
+//import { AxiosClient } from "../libs/AxiosClient";
+//import { type } from "os";
+//import axios from "axios";
+//import { GetStaticProps, GetServerSideProps } from "next";
+//import  BestSeller  from "../components/bestSeller";
+//import { CategoryContext } from "@/pages/_app";
+//import { SeacrhTop } from "../components/Searchbar"
+//import { FooterScreen } from "../components/footer";
+
+  
+
 
 export const getServerSideProps : GetServerSideProps = async (context:any) => {
   const {name} = context.query.name ?? ""

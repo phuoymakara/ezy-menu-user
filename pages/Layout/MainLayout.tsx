@@ -1,11 +1,11 @@
+//import { PageContext } from "../_app"
+//import { Back } from "@/src/components/back"
+//import axios from "axios"
 import { SeacrhTop } from "@/src/components/Searchbar"
 import {  useState } from "react"
-//import { PageContext } from "../_app"
 import { useRouter } from "next/router"
-//import { Back } from "@/src/components/back"
 import { FooterScreen } from "@/src/components/footer"
 import { LogoTop } from "@/src/components/LogoTop"
-import axios from "axios"
 
 export const MainLayout= ({children}:any) =>{
   const router = useRouter()
