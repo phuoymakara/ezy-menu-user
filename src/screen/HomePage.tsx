@@ -1,10 +1,12 @@
 import { 
+  useContext,
   useEffect, 
   useRef, 
   useState } from "react";
 import  MenuCard  from "../components/menuCard";
 
 import dynamic from "next/dynamic";
+import { DismissalPriceContext } from "@/pages/_app";
 
 type HomePageProps={
   menus ? :any|[]
@@ -21,6 +23,8 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
   const [showLoading, setShowLoading] = useState(false);
   const bottom = useRef(null);
   const delay = 10000; 
+  const DismiasalPrice = useContext(DismissalPriceContext)
+
 
   const[data,setData]=useState( () => {
     return menus
@@ -28,7 +32,35 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
   useEffect(()=>{
     setData(menus)
   },[menus])
-  
+  // const handleDismiisalPrice = (e:any) =>{
+  //   e.preventDefault()
+  //   if(DismiasalPrice.dismissal_price>0){
+  //     DismiasalPrice.setDismissal_price(0)
+  //   }
+  //   // else{
+  //   //   DismiasalPrice.setDismissal_price(DismiasalPrice.dismissal_price)
+  //   // }
+  // }
+  useEffect(()=>{
+    const handleDismiisalPrice = () =>{
+      //e.preventDefault()
+      if(DismiasalPrice.dismissal_price>0){
+        DismiasalPrice.setDismissal_price(0)
+      }else{
+        DismiasalPrice.setDismissal_price(DismiasalPrice.dismissal_price)
+      }
+      //console.log('Cliked...')
+    }
+    const bodyClickHandler = (event:any) => {
+      // Check if the clicked element is not a descendant of the component
+      if (!event.target.closest("#show_price_card")) {
+        handleDismiisalPrice();
+      }
+    };
+
+    document.body.addEventListener("click",bodyClickHandler)
+    return document.body.addEventListener("click",bodyClickHandler)
+  },[])
 
   return(
     <>
@@ -42,8 +74,10 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
         </div> 
       :
       <>
-        <div className={data?.length===0 || data?.length<3?"container mt-3 p-0 h-100vh":"container mt-3 p-0"}>
-          <div className="row px-2">
+        <div 
+        //onClick={handleDismiisalPrice}
+        className={data?.length===0 || data?.length<3?"container mt-3 p-0 h-100vh":"container mt-3 p-0"}>
+          <div className="row px-2 mx-0"> {/* Responsive for add mx-0 */}
             {
               data?.sort((a:any, b:any) => b.id - a.id)?.map((p:any, index:number) => {
                 return(

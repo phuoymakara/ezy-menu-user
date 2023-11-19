@@ -1,8 +1,9 @@
 //import Select from "react-select";
 //import { Button, FormGroup } from "reactstrap";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {AiOutlineCaretDown} from 'react-icons/ai'
 import Image from "next/image";
+import { DismissalPriceContext } from "@/pages/_app";
 
 
 type MenuCardProps = {
@@ -31,6 +32,7 @@ export const MenuCard = ({
   const sumprice = price ? parseFloat(price).toFixed(2) : price;
   const [selectPrice, setSelectprice] = useState(menu_price);
 
+  const show_price = useContext(DismissalPriceContext)
   
   
 
@@ -45,18 +47,30 @@ export const MenuCard = ({
       label: `${item.size} - $${parseFloat(item.price).toFixed(2)}`,
     }));
   }
-  //console.log(id)
+  
+  const handleShowPrice = (e:any,id:number) =>{
+    e.preventDefault()
+    if(show_price.dismissal_price===id){
+      show_price.setDismissal_price(0)
+    }else{
+      show_price.setDismissal_price(id)
+    }
+  }
+  //console.log('Show Price',show_price.dismissal_price)
   return (
     <>
-      <div className="card card-custom rounded-3 px-0 shadow-sm">
+      <div 
+       
+      className="card card-custom rounded-3 px-0 shadow-sm" >
         {/* <div className="px-3 object-fit-cover py-1"> </div> */}
         {
           image? 
           <Image
             src={image}
-            className="card-img-top img-card object-fit-cover"
+            className="card-img-top img-card"
             width={300}
             height={210}
+            //style={{objectFit:"cover",height:"280px"}}
             alt="My Image"
             loading="lazy"
             placeholder="blur"
@@ -80,10 +94,14 @@ export const MenuCard = ({
             <button className="btn-menu">{code}</button>
             {menu_price && menu_price?.length > 0 ?
             <>
-              <button className="btn-menu" onClick={()=>setshowPrice(showprice===menu_price.id?0:menu_price.id)}>${parseFloat(menu_price[0].price).toFixed(2)}
-              <AiOutlineCaretDown cursor={'pointer'} className="m-1" />
+              <button 
+              id="show_price_card"
+              className="btn-menu" onClick={(e:any)=>handleShowPrice(e,menu_price[0].id)}>
+                ${parseFloat(menu_price[0].price).toFixed(2)}
+                
+              <AiOutlineCaretDown cursor={'pointer'} style={{marginLeft:"0.5rem"}} /> {/* Add style margin to for same size */}
               </button>
-              <div className={menu_price.id===showprice?"price-pop":"d-none"}> 
+              <div className={Number(menu_price[0].id)===show_price.dismissal_price?"price-pop":"d-none"}> 
                 {
                   menu_price.map((x:any,index:number)=>{
                     return(

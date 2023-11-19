@@ -149,11 +149,11 @@ export default function Home() {
           ref={Ref} 
           id="test" 
           style={{ 
-            background:"red",
+            //background:"red",
             marginTop:"10%" ,
             height: '50px', 
             width:'100%', 
-            backgroundColor: isScrolledToLoad ? 'lightgreen' : 'white' }}>
+            backgroundColor: "#F6FAF7" }}>
         </div>
         )
       }
