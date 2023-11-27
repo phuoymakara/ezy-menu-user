@@ -13,6 +13,13 @@ body{
   margin-top: 20px;
 }
 
+.mt-40{
+  margin-top: 40px;
+}
+.mb-40{
+  margin-bottom: 40px;
+}
+
 .footer{
   width: 100%;
 }
@@ -32,7 +39,7 @@ body{
   float: left;
   margin-right: 15px;
   flex: 0 0 auto;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   background-color: white;
 }
 
@@ -156,6 +163,10 @@ body{
     height: 120vh !important;
   }
 
+  .btn-filter{
+    margin-bottom: 10px;
+  }
+
 }
 
 // /*12 pro*/
@@ -190,6 +201,7 @@ body{
   .col-md-3 .card-custom{
     width: 100%;
   }
+ 
 } 
 
 /*ipad pro*/
@@ -252,3 +264,104 @@ body{
   }
 }
 
+
+
+// Card style file => moved file
+
+
+.card-custom{
+  width: 20rem; // Default 20rem
+  height: 340px; // 302 x 337.4
+  border: 1px solid #00417F14;
+  border-radius: 10px;
+}
+
+.card-custom2{
+  width: 27rem;
+  height: auto;
+  position: relative;
+}
+.h-100vh{
+  height: 55vh;
+}
+.card-custom2 .out-stock{
+  background-color:  #303E27;
+  position: absolute;
+	width: auto;
+	margin: 10px 10px 0px 0px;
+  right: 0;
+	padding: 3px 5px;
+	color: #ffff;
+	font-size: 14px;
+	font-weight: 600;
+  border-radius: 10px;
+}
+
+.object-fit-cover{
+  object-fit: cover !important;
+}
+.object-fit-cover .img-card{
+  width: 100% !important;
+  //object-fit: cover; // Modify to fit with Mobile device s
+}
+
+.btn-menu{
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color:  #303E27;
+  font-weight: bold;
+  color: #ffff;
+  cursor: default !important;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.text-kh{
+  color: #00023D;
+	font-size: 18px;
+	font-weight: 500;
+	padding-bottom: 10px;
+}
+.text-en{
+  color: #00023D;
+	font-size: 18px;
+	font-weight: 500;
+	margin-top: -10px;
+	padding-bottom: 10px;
+}
+.btn-main {
+  position: relative;
+  cursor: pointer;
+}
+.btn-main .price-pop{
+  width: 120px;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  padding: 5px 0px;
+  background-color: #00417F14;
+}
+.btn-main .price-pop span{
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: blue;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+
+.btn-main .price-pop span:hover{
+ background-color: #cccccf;
+ cursor: pointer;
+}
+
+.btn-next{
+  color: rgba(255, 0, 0, 0.667);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.bg-pagination{
+  background-color: #303E27;
+  color: white;
+}

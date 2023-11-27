@@ -70,11 +70,11 @@ export const MenuCard = ({
             className="card-img-top img-card"
             width={300}
             height={210}
-            //style={{objectFit:"cover",height:"280px"}}
+            style={{objectFit:"cover"}}
             alt="My Image"
             loading="lazy"
-            placeholder="blur"
-            blurDataURL="../img_loading.jpeg"
+            placeholder="empty"
+            blurDataURL="https://ezymenu-dashboard.vercel.app/img_loading.jpeg"
           />
         //   <img
         //   src={image}

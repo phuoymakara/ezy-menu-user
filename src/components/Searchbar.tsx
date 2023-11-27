@@ -26,7 +26,7 @@ export const SeacrhTop = (categories:any) => {
   const{data,isError, isLoading} = useQuery({
     queryKey:'category',
     queryFn: async() => {
-      return await (await AxiosClient.get(`/categories`)).data.categories
+      return await (await AxiosClient.get(`/menus/categories`)).data.categories
     }
   })
   const handelSearch = (e:any) =>{
@@ -58,40 +58,41 @@ export const SeacrhTop = (categories:any) => {
   let isHomePage = useContext(PageContext)
   let isCategory = useContext(CategoryContext)
   
-  //console.log(isCategory.category)
+  //console.log(data)
   
 
   return (
     <>
-      <div className="container-fluid mt-200 ">
-        <div className="container-md ">
+        <div className="container-md" style={{alignItems:"center", padding:"0px 12px"}}>
           {/* <div className="d-flex justify-content-between"> </div> */}
-            <div className="row">
+            <div className="row m-0">
             <div className="col-md-8 px-0">
               {/* <div className="filter-menu d-flex py-2 px-0 justify-content-start"></div>  */}
-                <div className="cover-btn-filter d-flex ">
+                <div className="cover-btn-filter d-flex p-0 m-0"> {/* add p-0 m-0 */}
                   {
-                    data?.map((p:any, index:number) =>{
-                      if(p?.products?.length!==0){
+                    data?.map( (p:any, index:number) =>{
+                      //if(p?.menu_category?.length>0 && isCategory){
                         return(
-                          <div   key={index+1} className="">
+                          <div  key={index} className={`${index}`}>
                             <button  className=
                             { 
                               isCategory.category=== 0 && index ===0 ?`btn-filter bg-active`: p.id === isCategory.category && index!=0?`btn-filter bg-active`: `btn-filter `
                             }
                             onClick={()=>isCategory.setCategory(p.id===isCategory.category? isCategory.category : index===0? 0 :p.id)}>
-                              {index===0 ?"All Category": p.title_en || p.slug }
+                              {index === 0 ? "All Category" : p.title_en }
+                              {/* {p.title_en } {index} {} */}
                             </button>
                           </div>
                         )
-                      }
+                      //}
+                      //return <h1>{index}</h1>
                     })
                   }
                 </div>  
             </div>
             <div className="col-4 d-flex justify-content-end p-0">
               <div className="search d-flex ">
-                <div className="input-group mb-3">
+                <div className="input-group m-0"> {/* mb-3 */}
                   <form  action="" >
                   <input
                     type="text"
@@ -106,7 +107,6 @@ export const SeacrhTop = (categories:any) => {
             </div>
           </div> 
         </div>
-      </div>
     </>
   );
 };

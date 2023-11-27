@@ -76,12 +76,12 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
       <>
         <div 
         //onClick={handleDismiisalPrice}
-        className={data?.length===0 || data?.length<3?"container mt-3 p-0 h-100vh":"container mt-3 p-0"}>
-          <div className="row px-2 mx-0"> {/* Responsive for add mx-0 */}
+        className={data?.length===0 || data?.length<3?"container mt-3 p-0 h-100vh":"container mt-40 p-0"}>
+          <div className="row mx-0"> {/* Responsive for add mx-0 & removed px-2 */}
             {
               data?.sort((a:any, b:any) => b.id - a.id)?.map((p:any, index:number) => {
                 return(
-                  <div className="col-md-3 mb-4 " key={index+1} ref={index === data.length - 1 ? lastElementRef : null}>
+                  <div className="col-md-3 mb-4"   key={index+1} ref={index === data.length - 1 ? lastElementRef : null}>
                    <MenuCard
                       id={p.id}
                       code={p.code}

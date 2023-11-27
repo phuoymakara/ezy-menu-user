@@ -34,7 +34,7 @@ export default function Home() {
   const[all,setAll]=useState(false)
   const [isScrolledToLoad, setIsScrolledToLoad] = useState(false);
   const Ref = useRef<HTMLDivElement|any>(null);
-  const max_page=Number(menus?.length/8)
+  const max_page = Math.floor(menus?.length/8)
   const baseURL2 = String(process.env.NEXT_PUBLIC_FOOD_URL+`/menus?page=${page}`)
   const UrlBase = String(process.env.NEXT_PUBLIC_FOOD_URL+`/search/menus?name=${name}`)
   
@@ -48,7 +48,7 @@ export default function Home() {
    } = useInfiniteQuery('menuspage', 
    ({pageParam}:any)=>DataFetching(pageParam), 
    {
-    getNextPageParam: (lastPage:any, allPages:any) => allPages.length && allPages.length <= max_page ? allPages.length+1 : max_page,
+    getNextPageParam: (lastPage:any, allPages:any) => allPages.length && allPages.length <= max_page+1 ? allPages.length+1 : max_page+1,
    });
 
 
@@ -82,14 +82,23 @@ export default function Home() {
   }
 
   useEffect(()=>{
+    //if(data?.pageParams.length)
+    //console.log(data?.pages.length)
     DataFetching(data?.pageParams.length? data.pageParams.length : menus.length)
   },[name])
 
    if(isCategory.category !==0 ){
+//Old version
+
     //@ts-ignore
-    temp = menus?.filter((e:any,i:number)=>{
-      return e?.category_Id === isCategory.category
-    })
+    // temp = menus?.filter((e:any,i:number)=>{
+    //   return e?.category_Id === isCategory.category
+    // })
+    temp = menus?.filter((res:any)=>{
+       return res.menu_category?.some((fil:any) => {
+          return fil.category && fil.category.id === isCategory.category
+        })
+      })
   }else{
    temp = menus
   }
@@ -99,10 +108,14 @@ export default function Home() {
     onIntersect: fetchNextPage,
     enabled: hasNextPage,
   });
-
-  // if(isLoading){
-  //   console.log('Hello Loading....')
-  // }
+  
+  // console.log('Data',temp)
+  // console.log('Data Page,',data?.pageParams.length)
+  // console.log('Menus page',temp?.length)
+  // console.log('Name>',name)
+  // console.log('Param Data',data?.pageParams.length)
+  // console.log('Param Menus',temp)
+  //console.log('Parame MaxLength',loading,all)
   return (
     <>
       <Head>
@@ -133,12 +146,11 @@ export default function Home() {
      }
 
       {
-        loading && !all &&
-        (
+        loading=== true && all===false ?
           <div style={{display:"flex",justifyContent:"center",padding:"20px",marginTop:"5%"}}>
             <Spinner/>
           </div>
-        )
+        : ''
       }
     
       {
@@ -150,8 +162,8 @@ export default function Home() {
           id="test" 
           style={{ 
             //background:"red",
-            marginTop:"10%" ,
-            height: '50px', 
+            marginTop:"1%" , //10%
+            height: '20px', //50px 
             width:'100%', 
             backgroundColor: "#F6FAF7" }}>
         </div>

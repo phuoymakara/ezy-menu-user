@@ -2,10 +2,10 @@ import type { AppProps } from 'next/app'
 import '@/styles/homePage.scss'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@/styles/Card.scss'
 import MainLayout from './Layout/MainLayout';
 import { createContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+//import '@/styles/Card.scss'
 
 const queryClient = new QueryClient()
 
