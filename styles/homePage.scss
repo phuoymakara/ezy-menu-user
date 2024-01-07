@@ -47,6 +47,8 @@ body{
   background-color: #ddd;
 }
 
+
+
 #center{
   display: flex;
   justify-items: center;
@@ -71,8 +73,9 @@ body{
 	background-color: #F6FAF7;
   margin-right: 0px;
 }
-.search-input:focus{
-  border: 1.8px solid #303E27;
+
+#cover-search:focus-within{
+  border: 2px solid #303E27;
 }
 
 .bg-footer{
@@ -165,6 +168,12 @@ body{
 
   .btn-filter{
     margin-bottom: 10px;
+  }
+  .col-md-3 .card-custom{
+    height: auto !important;
+  }
+  .card-custom .img-card{
+    height: 240px;
   }
 
 }
@@ -271,9 +280,13 @@ body{
 
 .card-custom{
   width: 20rem; // Default 20rem
-  height: 340px; // 302 x 337.4
+  //height: 340px !important; // 302 x 337.4
   border: 1px solid #00417F14;
   border-radius: 10px;
+  //overflow: hidden;
+  align-items: stretch;
+  flex: 1;
+  flex-direction: column;
 }
 
 .card-custom2{
@@ -314,6 +327,7 @@ body{
   cursor: default !important;
   font-size: 14px;
   font-weight: 600;
+  padding: 0px 3px; // Add for responsive
 }
 
 .text-kh{
@@ -334,26 +348,29 @@ body{
   cursor: pointer;
 }
 .btn-main .price-pop{
-  width: 120px;
+  //width: 120px;
   position: absolute;
   right: 0;
-  top: 30px;
-  padding: 5px 0px;
-  background-color: #00417F14;
+  top: 0px;
+  padding: 5px 8px;
+  background-color: #303e27;
+  color: #fff;
+  border-radius: 10px;
 }
 .btn-main .price-pop span{
   display: block;
   font-size: 14px;
   font-weight: 600;
-  color: blue;
-  margin-bottom: 5px;
-  padding: 3px;
+  color: #fff;
+  //margin-bottom: 5px;
+  //padding: 0px 1px;
 }
 
-.btn-main .price-pop span:hover{
- background-color: #cccccf;
- cursor: pointer;
-}
+// .btn-main .price-pop span:hover{
+// //  background-color: #fff; //#cccccf
+// //  cursor: pointer;
+// //  color: #303e27;
+// }
 
 .btn-next{
   color: rgba(255, 0, 0, 0.667);

@@ -18,7 +18,7 @@ export const FooterScreen = () =>{
             width={180} 
             onClick={handleBackHome} 
             style={{cursor:"pointer"}}
-            alt="" />
+            alt="ezy-menu" />
           </div>
           <p className="text-center text-dark text-footer ">© 2023 Ezy Menu. All Rights Reserved.</p>
         </div>

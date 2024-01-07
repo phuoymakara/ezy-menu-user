@@ -19,6 +19,7 @@ export const SeacrhTop = (categories:any) => {
   const router = useRouter()
   const[valusearch, setValueSearch]= useState('')
   const[valuinput, setValueInput]= useState('')
+  const [isInputFocused, setIsInputFocused] = useState(false);
   // const Listclick = ["Categories", "foods", "drinks", "Juice"];
   // const ListArr = ["1", "2", "3", "4", "5"]; //, "6", "7", "8","1", "2", "3", "4", "5", "6", "7", "8"
   //console.log('loaded:',categories)
@@ -54,6 +55,18 @@ export const SeacrhTop = (categories:any) => {
     }
     
   }
+
+  const handleClearSearchText= (e:any) =>{
+    e.preventDefault()
+    //console.log("Clear...")
+    setValueInput("")
+    router.push({
+      //pathname: '/search',
+      query: {name: ''}
+    })
+    //setValueInput('')
+  }
+  //console.log(valuinput)
 
   let isHomePage = useContext(PageContext)
   let isCategory = useContext(CategoryContext)
@@ -94,13 +107,23 @@ export const SeacrhTop = (categories:any) => {
               <div className="search d-flex ">
                 <div className="input-group m-0"> {/* mb-3 */}
                   <form  action="" >
-                  <input
-                    type="text"
-                    className="search-input"
-                    placeholder="Search..."
-                    onChange={(e:any)=> {setValueInput(e.target.value), handleChangeSearch(e)}}
-                    //onFocus={handelSearch}
-                  />
+                  <span id="cover-search" style={{
+                    display:"flex", 
+                    borderRadius:"10px",
+                    border: "1px solid #303E27",
+                    padding:"0px 15px 0px 5px"}}>
+                    <input
+                      type="text"
+                      className="search-input"
+                      style={{border:"none"}}
+                      placeholder="Search..."
+                      value={valuinput}
+                      onChange={(e:any)=> {setValueInput(e.target.value), handleChangeSearch(e)}}
+                      onFocus={()=> setIsInputFocused(true)}
+                      onBlur={()=> setIsInputFocused(false)}
+                    />
+                    <svg xmlns="http://www.w3.org/2000/svg" className={valuinput?"":"d-none"} onClick={handleClearSearchText} width="24" height="32" style={{margin:"0px",cursor:"pointer"}} viewBox="0 0 24 24"><path fill="#303e27" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"/></svg>
+                  </span>
                   </form>
                 </div>
               </div>

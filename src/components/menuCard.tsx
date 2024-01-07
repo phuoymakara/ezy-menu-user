@@ -90,7 +90,7 @@ export const MenuCard = ({
       />
         }
         <div className="card-body px-2 pb-0 mb-0 mt-0">
-          <div className="d-flex justify-content-between px-1 m-0 btn-main">
+          <div className="d-flex justify-content-between px-0 m-0 btn-main"> {/* removed px-1 to --> px-0 */}
             <button className="btn-menu">{code}</button>
             {menu_price && menu_price?.length > 0 ?
             <>
@@ -99,13 +99,13 @@ export const MenuCard = ({
               className="btn-menu" onClick={(e:any)=>handleShowPrice(e,menu_price[0].id)}>
                 ${parseFloat(menu_price[0].price).toFixed(2)}
                 
-              <AiOutlineCaretDown cursor={'pointer'} style={{marginLeft:"0.5rem"}} /> {/* Add style margin to for same size */}
+              <AiOutlineCaretDown color="#fff" cursor={'pointer'} style={{marginLeft:"0.3rem"}} /> {/* Add style margin to for same size => 0.5 => 0.3  */}
               </button>
               <div className={Number(menu_price[0].id)===show_price.dismissal_price?"price-pop":"d-none"}> 
                 {
                   menu_price.map((x:any,index:number)=>{
                     return(
-                      <span className="d-flex justify-content-center" key={index} > {x.size} - ${parseFloat(x.price).toFixed(2)}</span>
+                      <span className="d-flex float-left m-0 p-0" key={index} > {x.size} - ${parseFloat(x.price).toFixed(2)}</span>
                     )
                   })
                 }

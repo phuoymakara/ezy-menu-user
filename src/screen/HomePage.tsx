@@ -66,10 +66,10 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
     <>
       {
         data?.length === 0? 
-        <div className="h-100vh p-3 d-flex justify-content-center">
+        <div className="d-flex justify-content-center" style={{margin:"50px 0px"}}>
           {/* <h3 className="text-center mt-4 text-primary">Menus Not Found</h3> */}
           <div>
-          <img src="../data_not_found.png" width={400} alt="data_not_found" />
+          <img src="../EzyMenu-404.png" width={400} alt="data_not_found" />
           </div>
         </div> 
       :
@@ -81,7 +81,7 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
             {
               data?.sort((a:any, b:any) => b.id - a.id)?.map((p:any, index:number) => {
                 return(
-                  <div className="col-md-3 mb-4"   key={index+1} ref={index === data.length - 1 ? lastElementRef : null}>
+                  <div className="col-md-3 mb-4 d-flex"   key={index+1} ref={index === data.length - 1 ? lastElementRef : null}>
                    <MenuCard
                       id={p.id}
                       code={p.code}
