@@ -6,7 +6,7 @@ import {
 import  MenuCard  from "../components/menuCard";
 
 import dynamic from "next/dynamic";
-import { DismissalPriceContext } from "@/pages/_app";
+import { DismissalPriceContext, SubcategoryContext } from "@/pages/_app";
 
 type HomePageProps={
   menus ? :any|[]
@@ -24,6 +24,12 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
   const bottom = useRef(null);
   const delay = 10000; 
   const DismiasalPrice = useContext(DismissalPriceContext)
+  let subcategoryContext = useContext(SubcategoryContext)
+  let newSubCat: Array<number|null> = subcategoryContext.isSubcategory?.map((q)=> {
+    if(Number(q)!==0) return q
+    return null
+  })
+  //console.log('TTT',newSubCat)
 
 
   const[data,setData]=useState( () => {
@@ -61,7 +67,7 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
     document.body.addEventListener("click",bodyClickHandler)
     return document.body.addEventListener("click",bodyClickHandler)
   },[])
-
+  //console.log('DATA',data)
   return(
     <>
       {
@@ -81,18 +87,57 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
             {
               data?.sort((a:any, b:any) => b.id - a.id)?.map((p:any, index:number) => {
                 return(
-                  <div className="col-md-3 mb-4 d-flex"   key={index+1} ref={index === data.length - 1 ? lastElementRef : null}>
-                   <MenuCard
-                      id={p.id}
-                      code={p.code}
-                      image={p.thumbnail}
-                      title_kh={p.title_kh}
-                      title_en={p.title_en}
-                      price={p.price}
-                      menu_price={p.Menu_Price}
-                    /> 
-                    
-                  </div>
+                  <>
+                    {
+                      newSubCat.length<=1?
+                      (
+                        <div className={`col-md-3 mb-4 d-flex`}   key={index} ref={index === data.length - 1 ? lastElementRef : null}>
+                          <MenuCard
+                            id={p.id}
+                            code={p.code}
+                            image={p.thumbnail}
+                            title_kh={p.title_kh}
+                            title_en={p.title_en}
+                            price={p.price}
+                            menu_price={p.Menu_Price}
+                            // name={p.menu_tags[0]?.tags.name}
+                            // text_color={p.menu_tags[0]?.tags.text_color}
+                            // background_color={p.menu_tags[0]?.tags.background_color}
+                            tags={p.menu_tags}
+                          /> 
+                       </div>
+                      )
+                      :
+                      (
+                       <>
+                       {
+                        p?.menu_category.map((z:any,i:number)=>{
+                          if(newSubCat.includes(z?.menu_category_subcategory[0]?.subcategory.id)){
+                            return(
+                              <div className={`col-md-3 mb-4 d-flex ${z.menu_category_subcategory[0]?.subcategory.id}`}   key={i} ref={index === data.length - 1 ? lastElementRef : null}>
+                              <MenuCard
+                                id={p.id}
+                                code={p.code}
+                                image={p.thumbnail}
+                                title_kh={p.title_kh}
+                                title_en={p.title_en}
+                                price={p.price}
+                                menu_price={p.Menu_Price}
+                                // name={p.menu_tags[0]?.tags.name}
+                                // text_color={p.menu_tags[0]?.tags.text_color}
+                                // background_color={p.menu_tags[0]?.tags.background_color}
+                                tags={p.menu_tags}
+                              /> 
+                           </div>
+                            )
+                          }
+                          return ''
+                        })
+                       }
+                       </>
+                      )
+                    }
+                  </>
                 )
               })
             }
@@ -136,6 +181,26 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
 
 
 /*
+
+                    <div className={`col-md-3 mb-4 d-flex`}   key={index+1} ref={index === data.length - 1 ? lastElementRef : null}>
+                      <MenuCard
+                         id={p.id}
+                         code={p.code}
+                         image={p.thumbnail}
+                         title_kh={p.title_kh}
+                         title_en={p.title_en}
+                         price={p.price}
+                         menu_price={p.Menu_Price}
+                         name={p.menu_tags[0]?.tags.name}
+                         text_color={p.menu_tags[0]?.tags.text_color}
+                         background_color={p.menu_tags[0]?.tags.background_color}
+                         tags={p.menu_tags}
+                       /> 
+                     </div>
+
+
+
+
 //import { MenuCard2 } from "../components/menuCard2";
 //import { useQuery } from "react-query";
 //import { AxiosClient } from "../libs/AxiosClient";

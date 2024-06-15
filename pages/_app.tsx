@@ -13,7 +13,10 @@ export const PageContext = createContext({
   page: false, 
   setPage: (menu: boolean) => { } 
 })
-
+export const SubcategoryContext = createContext({
+  isSubcategory: [0],
+  setIsSubcategory: (subcategory:number[]) => {}
+})
 //Filter Categories
 export const CategoryContext = createContext({ 
   category: 0, 
@@ -29,6 +32,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const[page, setPage]= useState(false)
   const[category, setCategory] = useState(0)
   const[dismissal_price, setDismissal_price] = useState(0)
+  const[isSubcategory,setIsSubcategory] = useState([0])
+
+
   useEffect(()=>{
     router.push('/')
   },[])
@@ -38,9 +44,11 @@ export default function App({ Component, pageProps }: AppProps) {
          <PageContext.Provider value={{page, setPage}}>
           <DismissalPriceContext.Provider value={{dismissal_price,setDismissal_price}}>
             <CategoryContext.Provider value={{category, setCategory}}>
-              <MainLayout>
-                <Component {...pageProps} />
-              </MainLayout>
+              <SubcategoryContext.Provider value={{isSubcategory, setIsSubcategory}}>
+                <MainLayout>
+                  <Component {...pageProps} />
+                </MainLayout>
+              </SubcategoryContext.Provider>
             </CategoryContext.Provider>
           </DismissalPriceContext.Provider>
          </PageContext.Provider>

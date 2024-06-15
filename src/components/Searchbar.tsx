@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { AxiosClient } from "../libs/AxiosClient";
 import { useRouter } from "next/router";
-import { CategoryContext, PageContext } from "@/pages/_app";
+import { CategoryContext, PageContext, SubcategoryContext } from "@/pages/_app";
 import axios from "axios";
 
 type SearchTopProps={
@@ -23,11 +23,20 @@ export const SeacrhTop = (categories:any) => {
   // const Listclick = ["Categories", "foods", "drinks", "Juice"];
   // const ListArr = ["1", "2", "3", "4", "5"]; //, "6", "7", "8","1", "2", "3", "4", "5", "6", "7", "8"
   //console.log('loaded:',categories)
+  let isHomePage = useContext(PageContext)
+  let isCategory = useContext(CategoryContext)
+  let subcategoryContext = useContext(SubcategoryContext)
 
   const{data,isError, isLoading} = useQuery({
     queryKey:'category',
     queryFn: async() => {
       return await (await AxiosClient.get(`/menus/categories`)).data.categories
+    }
+  })
+  const subcategory = useQuery({
+    queryKey:'subcategory',
+    queryFn: async() => {
+      return await (await AxiosClient.get(`/some/subcategories`)).data.subcategories
     }
   })
   const handelSearch = (e:any) =>{
@@ -66,14 +75,22 @@ export const SeacrhTop = (categories:any) => {
     })
     //setValueInput('')
   }
-  //console.log(valuinput)
+  const handleCheckSubcategory = (e:any, id:number) =>{
+    let box = e?.target
+    if(box.checked){
+      //@ts-ignore
+      subcategoryContext.setIsSubcategory((t:number[])=> [...t,id])
+    }else{
+      //@ts-ignore
+      subcategoryContext.setIsSubcategory((t:number[])=> t.filter((subId:number)=> subId !== id));
+    }
+  }
 
-  let isHomePage = useContext(PageContext)
-  let isCategory = useContext(CategoryContext)
-  
-  //console.log(data)
-  
 
+  // console.log("FF",isCategory.category)
+  // console.log(data)
+  //let subcategory = data?.map((d:any)=> d.subcategory)
+  //console.log('Sub',subcategoryContext.isSubcategory)
   return (
     <>
         <div className="container-md" style={{alignItems:"center", padding:"0px 12px"}}>
@@ -91,7 +108,10 @@ export const SeacrhTop = (categories:any) => {
                             { 
                               isCategory.category=== 0 && index ===0 ?`btn-filter bg-active`: p.id === isCategory.category && index!=0?`btn-filter bg-active`: `btn-filter `
                             }
-                            onClick={()=>isCategory.setCategory(p.id===isCategory.category? isCategory.category : index===0? 0 :p.id)}>
+                            onClick={()=>{
+                              isCategory.setCategory(p.id===isCategory.category? isCategory.category : index===0? 0 :p.id),
+                               subcategoryContext.setIsSubcategory([0])
+                               }}>
                               {index === 0 ? "All Category" : p.title_en }
                               {/* {p.title_en } {index} {} */}
                             </button>
@@ -130,8 +150,32 @@ export const SeacrhTop = (categories:any) => {
             </div>
           </div> 
         </div>
+        <div className={isCategory.category===0?"d-none":"container-md"}>
+          <div className="my-4 flex">
+           {
+            subcategory.data?.map((d:any)=>{
+              if(Number(d.category.id)===isCategory.category){
+                return(
+                  <span key={d.id} className="flex" style={{marginRight:"20px"}}>
+                    <input type="checkbox" name="subcategory" id="" onClick={(e)=> handleCheckSubcategory(e,d.id)} />
+                    <label htmlFor="" style={{marginLeft:"4px",fontSize:"15px"}}>{d.title_en}</label>
+                  </span>
+                )
+              }
+            })
+           }
+          </div>
+        </div>
     </>
   );
 };
 
 
+{/**       
+
+<span key={i} className="flex" style={{marginRight:"18px"}}>
+  <input type="checkbox" name="subcategory" id="" />
+  <label htmlFor="" style={{marginLeft:"4px",fontSize:"15px"}}>{s.id}</label>
+</span>
+                          
+ */}

@@ -15,6 +15,10 @@ type MenuCardProps = {
   title_ch?: string;
   price?: number | any;
   menu_price?: any;
+  name?: string;
+  text_color?:string;
+  background_color?:string;
+  tags? : any | any[]
 };
 
 
@@ -26,7 +30,11 @@ export const MenuCard = ({
   title_ch,
   title_en,
   title_kh,
-  id
+  id,
+  name,
+  text_color,
+  background_color,
+  tags
 }: MenuCardProps) => {
   const[showprice,setshowPrice] = useState(0)
   const sumprice = price ? parseFloat(price).toFixed(2) : price;
@@ -34,11 +42,11 @@ export const MenuCard = ({
 
   const show_price = useContext(DismissalPriceContext)
   
-  
+  //console.log("DD",tags?.length)
 
   const onSelect = (event: any, priceTag:any) => {
     //setSelectprice(event.target.value);
-    console.log(priceTag)
+    //console.log(priceTag)
   };
   let ops
   if(menu_price){
@@ -59,14 +67,27 @@ export const MenuCard = ({
   //console.log('Show Price',show_price.dismissal_price)
   return (
     <>
-      <div 
-       
-      className="card card-custom rounded-3 px-0 shadow-sm" >
-        {/* <div className="px-3 object-fit-cover py-1"> </div> */}
-        {
-          image? 
-          <Image
-            src={image}
+      <div className="card card-custom rounded-3 px-0 shadow-sm position-relative">
+          <div style={{width:"100%",margin:0,padding:"0px 2px"}}>
+            <div className="d-flex" style={{left:8,top:5,padding:"0.5px 4px",zIndex:"10",margin:"0%"}}>
+              {
+                tags?.length>=1?
+                (
+                  tags?.map((z:any,ix:number)=>{
+                    return(
+                      <span key={ix+1} className={"position-absolute"} style={{left:8,top:5,padding:"0.5px 4px",fontSize:14,borderRadius:8,color:z.tags.text_color,backgroundColor:z.tags.background_color}}> 
+                        {z.tags.name} 
+                      </span>
+                    )
+                  })
+              )
+              :''
+              }
+            </div>
+
+          </div>
+          <img
+            src={image??`https://ezymenu-dashboard.vercel.app/img_loading.jpeg`}
             className="card-img-top img-card"
             width={300}
             height={210}
@@ -74,21 +95,10 @@ export const MenuCard = ({
             alt="My Image"
             loading="lazy"
             placeholder="empty"
-            blurDataURL="https://ezymenu-dashboard.vercel.app/img_loading.jpeg"
+            //blurDataURL="https://ezymenu-dashboard.vercel.app/img_loading.jpeg"
           />
-        //   <img
-        //   src={image}
-        //   className="card-img-top img-card object-fit-cover"
-        //   height={210}
-        //   alt="My Image"
-        // />
-        : <img
-        src='../img_loading.jpeg'
-        className="card-img-top img-card object-fit-cover"
-        height={200}
-        alt="My Image"
-      />
-        }
+
+
         <div className="card-body px-2 pb-0 mb-0 mt-0">
           <div className="d-flex justify-content-between px-0 m-0 btn-main"> {/* removed px-1 to --> px-0 */}
             <button className="btn-menu">{code}</button>

@@ -11,7 +11,7 @@ import {
   useEffect, 
   useRef, 
   useState } from 'react'
-import { CategoryContext } from './_app'
+import { CategoryContext,SubcategoryContext } from './_app'
 import { useRouter } from 'next/router'
 import { Spinner } from 'reactstrap'
 import { useInfiniteQuery } from 'react-query'
@@ -27,6 +27,7 @@ export default function Home() {
   const {name} = router.query
 
   let isCategory = useContext(CategoryContext)
+  let subcategoryContext = useContext(SubcategoryContext)
   const[menus,setMenu] =useState<any|any[]>([])
   const[res,setRes]=useState()
   const[page,setPage]= useState(1)
@@ -82,11 +83,11 @@ export default function Home() {
   }
 
   useEffect(()=>{
-    //if(data?.pageParams.length)
+    //if(data?.pageParams.length) 
     //console.log(data?.pages.length)
     DataFetching(data?.pageParams.length? data.pageParams.length : menus.length)
   },[name])
-
+  console.log('page num',page,Ref)
    if(isCategory.category !==0 ){
 //Old version
 
@@ -95,6 +96,7 @@ export default function Home() {
     //   return e?.category_Id === isCategory.category
     // })
     temp = menus?.filter((res:any)=>{
+      //console.log("RR",res)
        return res.menu_category?.some((fil:any) => {
           return fil.category && fil.category.id === isCategory.category
         })
@@ -162,7 +164,7 @@ export default function Home() {
           id="test" 
           style={{ 
             //background:"red",
-            marginTop:"1%" , //10%
+            marginTop:"5%" , //10%
             height: '20px', //50px 
             width:'100%', 
             backgroundColor: "#F6FAF7" }}>
