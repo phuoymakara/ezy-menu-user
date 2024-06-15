@@ -1,6 +1,3 @@
-//import Image from 'next/image'
-//import { MenuCard } from '@/src/components/menuCard'
-//import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import { HomePageScreen } from '@/src/screen/HomePage'
