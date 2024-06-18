@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import { HomePageScreen } from '@/src/screen/HomePage'
-import axios from 'axios'
+import {AxiosClient} from '@/src/libs/AxiosClient'
 import { 
   useCallback, 
   useContext, 
@@ -58,10 +58,12 @@ export default function Home() {
     let response;
 
     if (!name || name === "" || name?.length === 0) {
-      response = await axios.get(`${process.env.NEXT_PUBLIC_FOOD_URL}/menus?page=${per_page}`);
+      //Replace axios to AxiosClient
+      response = await AxiosClient.get(`${process.env.NEXT_PUBLIC_FOOD_URL}/menus?page=${per_page}`);
       //console.log('Hello',response.data.menus)
     } else {
-      response = await axios.get(UrlBase);
+      //Replace axios to AxiosClient
+      response = await AxiosClient.get(UrlBase);
     }
 
     setAll(response.data?.all);
