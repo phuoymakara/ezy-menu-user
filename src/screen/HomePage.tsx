@@ -7,9 +7,10 @@ import  MenuCard  from "../components/menuCard";
 
 import dynamic from "next/dynamic";
 import { DismissalPriceContext, SubcategoryContext } from "@/pages/_app";
+import { IMenu } from "../types";
 
 type HomePageProps={
-  menus ? :any|[]
+  menus ? : IMenu[] | any | [] 
   active ? : number
   setActive ? : (active: number) => void,
   lastElementRef? : HTMLDivElement|any
@@ -91,8 +92,9 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
                     {
                       newSubCat.length<=1?
                       (
-                        <div className={`col-md-3 mb-4 d-flex`}   key={index} ref={index === data.length - 1 ? lastElementRef : null}>
+                        <div className={`col-md-3 mb-4 d-flex`}   key={`${index}-list-${p.id}`} ref={index === data.length - 1 ? lastElementRef : null}>
                           <MenuCard
+                            key={p.id+index}
                             id={p.id}
                             code={p.code}
                             image={p.thumbnail}
@@ -114,8 +116,9 @@ export const HomePageScreen = ({menus,active, setActive, lastElementRef}: HomePa
                         p?.menu_category.map((z:any,i:number)=>{
                           if(newSubCat.includes(z?.menu_category_subcategory[0]?.subcategory.id)){
                             return(
-                              <div className={`col-md-3 mb-4 d-flex ${z.menu_category_subcategory[0]?.subcategory.id}`}   key={i} ref={index === data.length - 1 ? lastElementRef : null}>
+                              <div className={`col-md-3 mb-4 d-flex ${z.menu_category_subcategory[0]?.subcategory.id}`}   key={`${i}-${pid}`} ref={index === data.length - 1 ? lastElementRef : null}>
                               <MenuCard
+                                key={p.id}
                                 id={p.id}
                                 code={p.code}
                                 image={p.thumbnail}

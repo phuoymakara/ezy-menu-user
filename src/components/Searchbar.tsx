@@ -28,13 +28,13 @@ export const SeacrhTop = (categories:any) => {
   let subcategoryContext = useContext(SubcategoryContext)
 
   const{data,isError, isLoading} = useQuery({
-    queryKey:'category',
+    queryKey:['category'],
     queryFn: async() => {
       return await (await AxiosClient.get(`/menus/categories`)).data.categories
     }
   })
   const subcategory = useQuery({
-    queryKey:'subcategory',
+    queryKey:['subcategory'],
     queryFn: async() => {
       return await (await AxiosClient.get(`/some/subcategories`)).data.subcategories
     }
@@ -88,7 +88,6 @@ export const SeacrhTop = (categories:any) => {
 
 
   // console.log("FF",isCategory.category)
-  // console.log(data)
   //let subcategory = data?.map((d:any)=> d.subcategory)
   //console.log('Sub',subcategoryContext.isSubcategory)
   return (
@@ -101,7 +100,6 @@ export const SeacrhTop = (categories:any) => {
                 <div className="cover-btn-filter d-flex p-0 m-0"> {/* add p-0 m-0 */}
                   {
                     data?.map( (p:any, index:number) =>{
-                      //if(p?.menu_category?.length>0 && isCategory){
                         return(
                           <div  key={index} className={`${index}`}>
                             <button  className=
@@ -113,12 +111,9 @@ export const SeacrhTop = (categories:any) => {
                                subcategoryContext.setIsSubcategory([0])
                                }}>
                               {index === 0 ? "All Category" : p.title_en }
-                              {/* {p.title_en } {index} {} */}
                             </button>
                           </div>
                         )
-                      //}
-                      //return <h1>{index}</h1>
                     })
                   }
                 </div>  

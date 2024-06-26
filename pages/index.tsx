@@ -13,19 +13,20 @@ import { useRouter } from 'next/router'
 import { Spinner } from 'reactstrap'
 import { useInfiniteQuery } from 'react-query'
 import useIntersectionObserver from '@/src/components/useInterSection'
+import { IMenu } from '@/src/types'
 
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const router = useRouter()
-  let temp: any | []
+  let temp: IMenu[] | any[]
 
   const {name} = router.query
 
   let isCategory = useContext(CategoryContext)
   let subcategoryContext = useContext(SubcategoryContext)
-  const[menus,setMenu] =useState<any|any[]>([])
+  const[menus,setMenu] =useState<IMenu[]|any>([])
   const[res,setRes]=useState()
   const[page,setPage]= useState(1)
   const[loading,setLoading]=useState(false)
@@ -86,10 +87,10 @@ export default function Home() {
     //console.log(data?.pages.length)
     DataFetching(data?.pageParams.length? data.pageParams.length : menus.length)
   },[name])
-  console.log('page num',page,Ref)
+  //console.log('page num',page,Ref)
    if(isCategory.category !==0 ){
 //Old version
-
+    
     //@ts-ignore
     // temp = menus?.filter((e:any,i:number)=>{
     //   return e?.category_Id === isCategory.category
@@ -110,7 +111,7 @@ export default function Home() {
     enabled: hasNextPage,
   });
   
-  // console.log('Data',temp)
+  // console.log('Data', menus?.)
   // console.log('Data Page,',data?.pageParams.length)
   // console.log('Menus page',temp?.length)
   // console.log('Name>',name)
