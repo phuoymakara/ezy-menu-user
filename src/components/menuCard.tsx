@@ -111,7 +111,7 @@ export const MenuCard = ({
                 
               <AiOutlineCaretDown color="#fff" cursor={'pointer'} style={{marginLeft:"0.3rem"}} /> {/* Add style margin to for same size => 0.5 => 0.3  */}
               </button>
-              <div className={Number(menu_price[0].id)===show_price.dismissal_price?"price-pop":"d-none"}> 
+              <div className={Number(menu_price[0].id)===show_price.dismissal_price && menu_price?.length>1?"price-pop":"d-none"}> 
                 {
                   menu_price.map((x:any,index:number)=>{
                     return(
