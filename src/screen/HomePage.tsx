@@ -10,7 +10,7 @@ import { DismissalPriceContext, SubcategoryContext } from "@/pages/_app";
 import { IMenu } from "../types";
 
 type HomePageProps={
-  menus ? : IMenu[] | any | [] 
+  menus ? : IMenu[] | any[] 
   active ? : number
   setActive ? : (active: number) => void,
   lastElementRef? : HTMLDivElement|any
